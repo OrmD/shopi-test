@@ -8,7 +8,7 @@
 	<!-- Additional required wrapper -->
 	<div class="swiper-wrapper">
 	  <!-- Slides -->
-	  <div class="swiper-slide">Slide 1</div>
+	  <div class="swiper-slide">Slide 3</div>
 	  <div class="swiper-slide">Slide 2</div>
 	  <div class="swiper-slide">Slide 3</div>
 	  ...
@@ -24,33 +24,8 @@
 	<div class="swiper-scrollbar"></div>
   </div>
 
-<script src="{{'swiper-bundle.min.js' | asset_url}}" defer></script>
-<script >
-	document.addEventListener('DOMContentLoaded', function () {
-		const swiper = new Swiper('.swiper', {
-		  slidesPerView: 1,
-		  spaceBetween: 10,
-		  navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
-		  },
-		  pagination: {
-			el: '.swiper-pagination',
-			clickable: true,
-		  },
-		  breakpoints: {
-			768: {
-			  slidesPerView: 2,
-			  spaceBetween: 20,
-			},
-			1024: {
-			  slidesPerView: 3,
-			  spaceBetween: 30,
-			},
-		  }
-		});
-	  });
-</script>
+<script src="{{'swiper-bundle.min.js' | asset_url}}" defer="defer"></script>
+<script src="{{ 'swaiper-test.js' | asset_url}}"defer></script> 
 {% schema %}
 {
   "name": "Slider swaiper test",
