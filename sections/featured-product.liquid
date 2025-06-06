@@ -374,6 +374,14 @@
                       </volume-pricing>
                     {%- endif -%}
                   </div>
+				  {% if product.metafields.custom.instuction.value.size > 0 %}
+					<label for="product-dropdown">Виберіть один додаток до продукту:</label>
+					<select id="product-dropdown" name="product-dropdown">
+					  {% for option in product.metafields.custom.instuction.value %}
+						<option value="{{ option }}">{{ option }}</option>
+					  {% endfor %}
+					</select>
+				  {% endif %}
                 {%- when 'share' -%}
                   {% liquid
                     assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
@@ -423,6 +431,7 @@
                           {{ product.metafields.reviews.rating.value.scale_max -}}
                         </span>
                       </p>
+					  
                       <p class="rating-count caption">
                         <span aria-hidden="true">({{ product.metafields.reviews.rating_count }})</span>
                         <span class="visually-hidden">
@@ -436,6 +445,7 @@
                   {% render 'icon-with-text', block: block %}
               {%- endcase -%}
             {%- endfor -%}
+			
             <a
               {% if product == blank %}
                 role="link" aria-disabled="true"
@@ -452,6 +462,7 @@
       </div>
       {% render 'product-media-modal', product: product, variant_images: variant_images %}
     </div>
+	
   </section>
 
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
