@@ -9,40 +9,40 @@
  */
 {
   "sections": {
-    "swaiper_slider_test_JBicha": {
+    "swaiper_slider_test_8MnfPT": {
       "type": "swaiper-slider-test",
       "blocks": {
-        "image_slide_PdRQKh": {
+        "image_slide_cgxfPp": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/notebook_1_b04d6042-03d8-4fe2-bf85-56c5828b2dc0.webp"
           }
         },
-        "image_slide_anmbbF": {
+        "image_slide_LnRYQG": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/paper_folder_1.webp"
           }
         },
-        "image_slide_qRkUax": {
+        "image_slide_Azatrm": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/paper_1.webp"
           }
         },
-        "image_slide_wkKfhB": {
+        "image_slide_9FWfJ6": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/pencils_1.webp"
           }
         },
-        "image_slide_bXPaTt": {
+        "image_slide_KF8iNJ": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/scissors_1.webp"
           }
         },
-        "image_slide_ADWkPU": {
+        "image_slide_bcRQiY": {
           "type": "image_slide",
           "settings": {
             "image": "shopify://shop_images/pen.webp"
@@ -50,27 +50,97 @@
         }
       },
       "block_order": [
-        "image_slide_PdRQKh",
-        "image_slide_anmbbF",
-        "image_slide_qRkUax",
-        "image_slide_wkKfhB",
-        "image_slide_bXPaTt",
-        "image_slide_ADWkPU"
+        "image_slide_cgxfPp",
+        "image_slide_LnRYQG",
+        "image_slide_Azatrm",
+        "image_slide_9FWfJ6",
+        "image_slide_KF8iNJ",
+        "image_slide_bcRQiY"
       ],
       "name": "Swiper Gallery",
       "settings": {
         "show_arrows_pc": true,
-        "show_pagination_pc": true,
+        "show_pagination_pc": false,
         "distance_betw_slides_pc": 20,
         "number_image_pc": 4,
-        "show_arrows_tb": false,
+        "show_arrows_tb": true,
         "show_pagination_tb": true,
         "distance_betw_slides_tb": 10,
-        "number_image_tb": 1,
+        "number_image_tb": 3,
         "show_arrows_mb": true,
-        "show_pagination_mb": false,
-        "distance_betw_slides_mb": 4,
-        "number_image_mb": 2
+        "show_pagination_mb": true,
+        "distance_betw_slides_mb": 3,
+        "number_image_mb": 1
+      }
+    },
+    "featured_product_WfjDc9": {
+      "type": "featured-product",
+      "blocks": {
+        "text_CKmPHd": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_iJNda8": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_NRawE8": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_CiNh9b": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_UX7Jkp": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_9N6WF4": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_KCcc4p": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_CKmPHd",
+        "title_iJNda8",
+        "price_NRawE8",
+        "variant_picker_CiNh9b",
+        "quantity_selector_UX7Jkp",
+        "buy_buttons_9N6WF4",
+        "share_KCcc4p"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "блокнот-діловий-brief-l2u-а5-96-арк-клітинка-шт-шкіра",
+        "color_scheme": "scheme-1",
+        "secondary_background": false,
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "image_banner": {
@@ -142,7 +212,8 @@
     }
   },
   "order": [
-    "swaiper_slider_test_JBicha",
+    "swaiper_slider_test_8MnfPT",
+    "featured_product_WfjDc9",
     "image_banner",
     "featured_collection"
   ]
