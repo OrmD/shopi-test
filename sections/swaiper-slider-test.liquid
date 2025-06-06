@@ -2,50 +2,217 @@
 	rel="stylesheet"
 	href="{{'swiper-bundle.min.css' | asset_url}}"
   />
+ <style>
+			
+			  .swiper {
+				{% case section.settings.number_image_mb %}
+				{% when 1 %} width: 90%; {% when 1.5 & 2 %} width:97%;
+				
+			  {% endcase %}
+			  }
+			  @media (min-width: 425px) and (max-width: 768px) {
+				.swiper {
+					{% case section.settings.number_image_mb %}
+					  {% when 1 %} width: 65%; {% when 1.5 %} width: 90%; {% when 2 %} width: 95%;
+					  
+					{% endcase %}
+				  }
+			}
+		  
+			@media (min-width: 768px) and (max-width: 1199px) {
+			  .swiper {
+				{% case section.settings.number_image_tb %}
+				  {% when 1 %} width: 35%; {% when 2 %} width: 55%;
+				  {% when 3 %} width: 80%; {% when 4 %} width: 95%;
+				{% endcase %}
+			  }
+			}
+		  
+			@media (min-width: 1200px) {
+			  .swiper {
+				{% case section.settings.number_image_pc %}
+				  {% when 1 %} width: 25%; {% when 2 %} width: 45%;
+				  {% when 3 %} width: 65%; {% when 4 %} width: 90%;
+				{% endcase %}
+			  }
+			}
+		  </style>
 
 <!-- Slider main container -->
 	<div class="swiper mySwiper">
 		<div class="swiper-wrapper">
 		  {% for block in section.blocks %}
-			{% if block.settings.image != blank %}
-			  <div class="swiper-slide">
-			
-				<img src="{{ block.settings.image | image_url}}" width="300" height="500" alt="Slide image" loading="lazy">
+			{% if block.settings.image %}
+			  <div class="swiper-slide" >
+				<img src="{{ block.settings.image | image_url}}" width="100%" height="500" alt="Slide image" loading="lazy">
 			  </div>
 			{% endif %}
 		  {% endfor %}
-		</div>
-	  
-		{% if section.settings.show_arrows %}
+		  
+		</div> 
+		
 		  <div class="swiper-button-next"></div>
 		  <div class="swiper-button-prev"></div>
-		{% endif %}
-	  
-		{% if section.settings.show_pagination %}
+		
 		  <div class="swiper-pagination"></div>
-		{% endif %}
+		
 	  </div>
 
 <script src="{{'swiper-bundle.min.js' | asset_url}}" defer="defer"></script>
-<script src="{{ 'swaiper-test.js' | asset_url}}"defer></script> 
+<script defer>
+	document.addEventListener("DOMContentLoaded", function () {
+		console.log('okay');
+		new Swiper(".mySwiper", {
+		  breakpoints: {
+			0: {
+			  slidesPerView: {{ section.settings.number_image_mb }},
+			  spaceBetween: {{ section.settings.distance_betw_slides_mb }},
+			  navigation: {
+				enabled: {{ section.settings.show_arrows_mb }}
+			  },
+			  pagination: {
+				enabled: {{ section.settings.show_pagination_mb }}
+			  }
+			},
+			768: {
+			  slidesPerView: {{ section.settings.number_image_tb }},
+			  spaceBetween: {{ section.settings.distance_betw_slides_tb }},
+			  navigation: {
+				enabled: {{ section.settings.show_arrows_tb }}
+			  },
+			  pagination: {
+				enabled: {{ section.settings.show_pagination_tb }}
+			  }
+			},
+			1200: {
+			  slidesPerView: {{ section.settings.number_image_pc }},
+			  spaceBetween: {{ section.settings.distance_betw_slides_pc }},
+			  navigation: {
+				enabled: {{ section.settings.show_arrows_pc }}
+			  },
+			  pagination: {
+				enabled: {{ section.settings.show_pagination_pc }}
+			  }
+			}
+		  },
+		  navigation: {
+			nextEl: ".swiper-button-next",
+			prevEl: ".swiper-button-prev",
+		  },
+		  pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		  }
+		});
+	  });</script> 
 {% schema %}
 {
   "name": "Swiper Gallery ",
   "tag": "section",
   "class": "section swiper-gallery",
   "settings": [
+	{
+	"type": "header",
+	"content": "Settings for PC"
+	},
     {
       "type": "checkbox",
-      "id": "show_arrows",
-      "label": "Show navigation arrows",
+      "id": "show_arrows_pc",
+      "label": "Show navigation arrows (PC)",
       "default": true
     },
     {
       "type": "checkbox",
-      "id": "show_pagination",
-      "label": "Show pagination",
+      "id": "show_pagination_pc",
+      "label": "Show pagination (PC)",
       "default": true
-    }
+    },
+	{
+		"type": "range",
+		"id": "distance_betw_slides_pc",
+		"min": 1,
+		"max": 20,
+		"step": 1,
+		"label": "Distance between slides(0 to 20) (PC)",
+		"default": 10
+	  },
+	{
+		"type": "range",
+		"id": "number_image_pc",
+		"min": 1,
+		"max": 4,
+		"step": 1,
+		"label": "Number image (PC)",
+		"default": 3
+	  },
+	  {
+		"type": "header",
+		"content": "Settings for Tablet"
+		},
+		{
+		  "type": "checkbox",
+		  "id": "show_arrows_tb",
+		  "label": "Show navigation arrows (Tablet)",
+		  "default": true
+		},
+		{
+		  "type": "checkbox",
+		  "id": "show_pagination_tb",
+		  "label": "Show pagination (Tablet)",
+		  "default": true
+		},
+		{
+			"type": "range",
+			"id": "distance_betw_slides_tb",
+			"min": 1,
+			"max": 20,
+			"step": 1,
+			"label": "Distance between slides(0 to 20) (Tablet)",
+			"default": 10
+		  },
+		{
+			"type": "range",
+			"id": "number_image_tb",
+			"min": 1,
+			"max": 4,
+			"step": 1,
+			"label": "Number image (Tablet)",
+			"default": 3
+		  },
+		  {
+			"type": "header",
+			"content": "Settings for Mobile"
+			},
+			{
+			  "type": "checkbox",
+			  "id": "show_arrows_mb",
+			  "label": "Show navigation arrows (Mobile)",
+			  "default": true
+			},
+			{
+			  "type": "checkbox",
+			  "id": "show_pagination_mb",
+			  "label": "Show pagination (Mobile)",
+			  "default": true
+			},
+			{
+				"type": "range",
+				"id": "distance_betw_slides_mb",
+				"min": 1,
+				"max": 10,
+				"step": 1,
+				"label": "Distance between slides(0 to 20) (Mobile)",
+				"default": 5
+			  },
+			{
+				"type": "range",
+				"id": "number_image_mb",
+				"min": 1,
+				"max": 2,
+				"step": 0.5,
+				"label": "Number image (Mobile)",
+				"default": 1
+			  }
   ],
   "blocks": [
     {
@@ -60,7 +227,6 @@
       ]
     }
   ],
-  "max_blocks": 20,
   "presets": [
     {
       "name": "Swiper Gallery",
