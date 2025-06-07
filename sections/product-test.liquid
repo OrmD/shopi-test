@@ -1,6 +1,16 @@
 
-{% assign test_product = all_products[section.settings.product] %}
-<!-- section.settings.selected_product/-->
+{% assign test_product = section.settings.selected_product %}
+<!-- all_products[section.settings.product]/-->
+{% assign colors = test_product.metafields.custom.colors | split: ',' %}
+
+<style>
+	.color-swatch{
+		display: block;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%
+	}
+</style>
 
 <div class="product-test__block"> 
 	<div class="product-test__img">
@@ -17,8 +27,22 @@
 	<div class="product-test__info-block">
 		<h2 class="product-test__title">{{ test_product.title}}</h2>
 		<div class="product-test__price">{{ test_product.price | money }}</div>
-		<div class="product-test__select-colors">{{ product.metafields | json }}
-</div>
+  <label for="product-color">Оберіть колір:</label>
+  {% for option in test_product.options_with_values %}
+  {% if option.name == 'Color' %}
+    <div class="color-options">
+      {% for value in option.values %}
+		
+        <label>
+          <input type="radio" name="Color" value="{{ value }}" >
+          <span class="color-swatch" style="background-color:{{ value | downcase}};" ></span>
+		  
+        </label>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %}
+
 		<button class="product-test__button-buy">Купити продукт</button>
 		<div class="product-test__desc">{{ test_product.description }}</div>
 		{% if test_product.metafields.custom.instuction.value.size > 0 %}
