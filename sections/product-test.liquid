@@ -1,12 +1,24 @@
 
-{% assign test_product = section.settings.selected_product %}
+{% assign test_product = all_products[section.settings.product] %}
+<!-- section.settings.selected_product/-->
 
 <div class="product-test__block"> 
-	<div class="product-test__img"></div>
+	<div class="product-test__img">
+		{% if test_product.featured_image %}
+  <img 
+    src="{{ test_product.featured_image | image_url: width: 200 }}" 
+    width="200" 
+    height="auto" 
+    alt="{{ test_product.title }}"
+  >
+{% endif %}
+
+	</div>
 	<div class="product-test__info-block">
-		<h2 class="product-test__title">{{ test_product.title }}</h2>
+		<h2 class="product-test__title">{{ test_product.title}}</h2>
 		<div class="product-test__price">{{ test_product.price | money }}</div>
-		<div class="product-test__select-colors">кольори</div>
+		<div class="product-test__select-colors">{{ product.metafields | json }}
+</div>
 		<button class="product-test__button-buy">Купити продукт</button>
 		<div class="product-test__desc">{{ test_product.description }}</div>
 		{% if test_product.metafields.custom.instuction.value.size > 0 %}
