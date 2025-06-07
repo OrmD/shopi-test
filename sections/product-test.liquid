@@ -1,4 +1,46 @@
 
-<section> 
-	
-</section>
+{% assign test_product = section.settings.selected_product %}
+
+<div class="product-test__block"> 
+	<div class="product-test__img"></div>
+	<div class="product-test__info-block">
+		<h2 class="product-test__title">{{ test_product.title }}</h2>
+		<div class="product-test__price">{{ test_product.price | money }}</div>
+		<div class="product-test__select-colors">кольори</div>
+		<button class="product-test__button-buy">Купити продукт</button>
+		<div class="product-test__desc">{{ test_product.description }}</div>
+		{% if test_product.metafields.custom.instuction.value.size > 0 %}
+					<label for="product-dropdown">Виберіть один додаток до продукту:</label>
+					<select id="product-dropdown" name="product-dropdown">
+					  {% for option in test_product.metafields.custom.instuction.value %}
+						<option value="{{ option }}">{{ option }}</option>
+					  {% endfor %}
+					</select>
+				  {% endif %}
+	</div>
+</div>
+
+{% schema %}
+{
+  "name": "Product test",
+  "tag": "section",
+  "class": "section product-test",
+  "settings": [
+	{
+	"type": "header",
+	"content": "Налаштування картки "
+	},
+	{
+	"type": "product",
+	"id": "selected_product",
+	"label": "Виберіть продукт"
+}
+  ],
+  "presets": [
+    {
+      "name": "Product test"
+    }
+  ]
+}
+{% endschema %}
+

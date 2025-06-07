@@ -1,0 +1,20 @@
+{
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "auto-close-tag.activationOnLanguage": [
+    "html",
+    "xml",
+    "php",
+    "javascript",
+    "typescript",
+    "liquid"
+  ],
+  "files.associations": {
+    "*.liquid": "liquid"
+  },
+  "emmet.includeLanguages": {
+    "liquid": "html"
+  }
+}
