@@ -3,27 +3,146 @@
 <!-- all_products[section.settings.product]/-->
 
 <style>
-	.product-test__color-circle{
-		display: block;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -73%);
-	height: 20px;
-	width: 20px;
-	border-radius: 50%;
-	z-index: 1;
-	}
-	.product-test__color-radio-btn{
-		position: relative;
-		height: 20px;
-		width: 21px;
-		opacity: 0.5;
-		z-index: 6;
-	}
 	.product-test__color-block{
 		position: relative;
 	}
+.product-test__color-radio-btn{
+		position: relative;
+		height: 40px;
+		width: 41px;
+		opacity: 0.5;
+		z-index: 6;
+	}
+.product-test__color-circle{
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -85%);
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	z-index: 1;
+	}
+
+.product-test__desc {
+	max-width: 600px;
+	 display: -webkit-box;
+  -webkit-line-clamp: 10; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+		.product-test__block {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+}
+.product-test__info-block {
+		margin-right: 5px;
+}
+	.product-test__image {
+	width: 100%;
+	max-width: 500px;
+}
+#product-dropdown{
+	border: none;
+	padding:5px 40px 5px 0;
+	font-size: 20px;
+	margin: 10px 0;
+	border-bottom: 1px solid #333;
+}
+#product-dropdown:focus-visible{
+	outline:none;
+	box-shadow:none;
+}
+
+@media (max-width: 768px) {
+		.product-test_button-buy{
+			-webkit-line-clamp: 7; 
+}
+#product-dropdown{
+	padding-right: 10px;
+	font-size: 18px
+}
+	}
+	@media (max-width: 600px) {
+		.product-test__block {
+			flex-direction:column;
+		}
+		.product-test__info-block {
+		margin:0 10px;
+}
+	}
+	@media (max-width: 375px) {
+		.product-test_button-buy{
+			-webkit-line-clamp: 5; 
+}
+#product-dropdown{
+	width: 100%;
+	font-size: 14px
+}
+	}
+	{% if section.settings.checkbox-id %}
+		.product-test__block {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+}
+.product-test__img{
+display: flex;
+justify-content: center;
+width: 100%;
+}
+.product-test__img img {
+  flex: 1 1 0; /* Кожне зображення займає 50% контейнера */ 
+}
+.product-test__desc {
+	max-width: 800px;}
+
+.product-test__image-alt {
+	height: 100%;
+	max-height: 600px;
+	width: 100%;
+	max-width: 500px;
+}
+.product-test__image {
+
+}
+@media (max-width: 1024px) {
+	.product-test__image-alt {
+	max-width: 400px;
+	max-height: 500px;
+}
+.product-test__image {
+	max-width: 400px;
+		max-height: 500px;
+}
+.product-test__info-block{
+margin: 0 5px;}
+}
+@media (max-width: 800px) {
+	.product-test__image-alt {
+	max-width: 300px;
+	max-height: 400px;
+}
+.product-test__image {
+	max-width: 300px;
+		max-height: 400px;
+}
+@media (max-width: 600px) {
+.product-test__img{
+flex-direction:column;
+align-items: center;
+}
+}
+}
+		{% else %}
+
+	
+	{% endif %}
 </style>
 
 <div class="product-test__block"> 
@@ -31,18 +150,18 @@
 {% if test_product.featured_image %}
 	 {% if section.settings.checkbox-id %}
   <img 
-    src="{{ test_product.featured_image | image_url: width: 200 }}" 
-    width="200" 
-    height="auto" 
+    src="{{ test_product.featured_image | image_url }}" 
+    width="1"
+    height="600" 
     alt="{{ test_product.title }}"
     class="product-test__image"
   >
   {% for altimg in test_product.images %}
     {% if test_product.featured_image.alt == altimg.alt and test_product.featured_image.src != altimg.src %}
       <img 
-        src="{{ altimg | image_url: width: 200 }}" 
-        width="200" 
-        height="auto" 
+        src="{{ altimg | image_url }}" 
+        width="1" 
+        height="1" 
         alt="{{ test_product.title }}"
         class="product-test__image-alt"
       >
@@ -50,9 +169,9 @@
   {% endfor %}
 {% else %}
   <img 
-    src="{{ test_product.featured_image | image_url: width: 200 }}" 
-    width="200" 
-    height="auto" 
+    src="{{ test_product.featured_image | image_url  }}" 
+	width= "1";
+	height="auto"
     alt="{{ test_product.title }}"
     class="product-test__image"
   >
@@ -65,8 +184,6 @@
 		<h2 class="product-test__title">{{ test_product.title}}</h2>
 		<div class="product-test__price">{{ test_product.price | money }}</div>
  <legend class="product-test__color-title">Оберіть колір:</legend>
-
-
 
 {% for option in test_product.options_with_values %}
   {% if option.name == 'Color' %}
@@ -101,17 +218,21 @@
   {% endif %}
 {% endfor %}
 
-		<button class="product-test__button-buy">Купити продукт</button>
-		<div class="product-test__desc">{{ test_product.description }}</div>
-		{% if test_product.metafields.custom.instuction.value.size > 0 %}
-					<label for="product-dropdown">Виберіть один додаток до продукту:</label>
+		
+		<div class="product-test__block-dropdwn">
+{% if test_product.metafields.custom.instuction.value.size > 0 %}
+					
 					<select id="product-dropdown" name="product-dropdown">
-						<option value="" disabled selected></option>
+						<option value="" disabled selected class="product-1fts-option">Виберіть один додаток до продукту</option>
 					  {% for option in test_product.metafields.custom.instuction.value %}
 						<option value="{{ option }}">{{ option }}</option>
 					  {% endfor %}
 					</select>
 				  {% endif %}
+		</div>
+		
+		<div class="product-test__desc">{{ test_product.description  }}</div>
+		<button class="product-test__button-buy">Купити продукт</button>
 	</div>
 </div>
 
@@ -164,7 +285,7 @@ wrapColorBtn.addEventListener("click", (e) => {
 	"type": "checkbox",
 	"id": "checkbox-id",
 	"label": "Дві фотографії",
-	"default":false
+	"default":true
 	}
   ],
   "presets": [
