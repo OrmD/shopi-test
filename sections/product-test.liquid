@@ -28,37 +28,72 @@
 
 <div class="product-test__block"> 
 	<div class="product-test__img">
-		{% if test_product.featured_image %}
+{% if test_product.featured_image %}
+	 {% if section.settings.checkbox-id %}
   <img 
     src="{{ test_product.featured_image | image_url: width: 200 }}" 
     width="200" 
     height="auto" 
     alt="{{ test_product.title }}"
-	class="product-test__image"
+    class="product-test__image"
+  >
+  {% for altimg in test_product.images %}
+    {% if test_product.featured_image.alt == altimg.alt and test_product.featured_image.src != altimg.src %}
+      <img 
+        src="{{ altimg | image_url: width: 200 }}" 
+        width="200" 
+        height="auto" 
+        alt="{{ test_product.title }}"
+        class="product-test__image-alt"
+      >
+    {% endif %}
+  {% endfor %}
+{% else %}
+  <img 
+    src="{{ test_product.featured_image | image_url: width: 200 }}" 
+    width="200" 
+    height="auto" 
+    alt="{{ test_product.title }}"
+    class="product-test__image"
   >
 {% endif %}
-
+		
+{% endif %}
 	</div>
 	<div class="product-test__info-block">
+		
 		<h2 class="product-test__title">{{ test_product.title}}</h2>
 		<div class="product-test__price">{{ test_product.price | money }}</div>
  <legend class="product-test__color-title">Оберіть колір:</legend>
+
+
 
 {% for option in test_product.options_with_values %}
   {% if option.name == 'Color' %}
     <div class="product-test__color-options">
       {% for value in option.values %}
+		{% assign raw_image_url = '' %}
         {% assign image_url = '' %}
+		{% assign image_alt_url = '' %}
         
         {%- for variant in test_product.variants -%}
           {% if variant.option1 == value and variant.image %}
+			{% assign raw_image_url = variant.image.src %}
             {% assign image_url = variant.image.src | image_url %}
+			{% assign image_alt_text = variant.image.alt  %}
+            {% break %}
+          {% endif %}
+        {%- endfor -%}
+
+		{%- for altImgArray in test_product.images -%}
+          {% if altImgArray.alt == image_alt_text and altImgArray.src != raw_image_url %}
+            {% assign image_alt_url = altImgArray.src | image_url %}
             {% break %}
           {% endif %}
         {%- endfor -%}
         
         <label class="product-test__color-block">
-          <input type="radio" name="Color" value="{{ value }}" class="product-test__color-radio-btn" data-img="{{ image_url }}">
+          <input type="radio" name="Color" value="{{ image_alt_text }}" class="product-test__color-radio-btn" data-img="{{ image_url }}" data-alt="{{ image_alt_url }}">
           <span class="product-test__color-circle" style="background-color:{{ value | downcase }};"></span>
         </label>
       {% endfor %}
@@ -82,15 +117,26 @@
 
 <script>
 	const wrapColorBtn = document.querySelector(".product-test__color-options");
-	  wrapColorBtn.addEventListener("click",(e)=>{
-	if(e.target.className === "product-test__color-radio-btn"){
-		const urlImg = e.target.dataset.img
-	 const mainImg = document.querySelector(".product-test__image");
-	 mainImg.src = urlImg;
-	}
-	})
-	const imgUrl = "{{ test_product.images  }}";
-  console.log("Картинка"+ imgUrl);
+
+wrapColorBtn.addEventListener("click", (e) => {
+	 const urlImg = e.target.dataset.img;
+	   const mainImg = document.querySelector(".product-test__image");
+  if ({{ section.settings.checkbox-id }}) {
+    if (e.target.classList.contains("product-test__color-radio-btn")) {
+      const urlAltImg = e.target.dataset.alt;
+      const altImg = document.querySelector(".product-test__image-alt");
+      altImg.src = urlAltImg;
+	  mainImg.src = urlImg;
+	  console.log(urlAltImg)
+    }
+  } else {
+    if (e.target.classList.contains("product-test__color-radio-btn")) {
+      mainImg.src = urlImg;
+	  console.log(urlImg)
+    }
+  }
+});
+
   
 
 </script>
@@ -109,7 +155,17 @@
 	"type": "product",
 	"id": "selected_product",
 	"label": "Виберіть продукт"
-}
+},
+{
+	"type": "header",
+	"content": "Формат виведення картинок "
+	},
+	{
+	"type": "checkbox",
+	"id": "checkbox-id",
+	"label": "Дві фотографії",
+	"default":false
+	}
   ],
   "presets": [
     {
